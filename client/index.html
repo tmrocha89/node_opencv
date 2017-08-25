@@ -7,10 +7,13 @@
 </head>
 <body>
   <div class="container center">
-    <canvas id="canvas-video" width="640" height="480"></canvas>
+  	<video style="display:none"></video>
+  	<canvas id="canvas" style="display:none"></canvas>
+  	<canvas id="canvas-face" width="640" height="480"></canvas>
   </div>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/app.js"></script>
+  <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="/receiver.js"></script>
+  <script type="text/javascript" src="/sender.js"></script>
 </body>
 </html>

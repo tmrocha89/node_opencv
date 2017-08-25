@@ -1,35 +1,51 @@
-var cv = require('opencv');
-
-// camera properties
-var camWidth = 320;
-var camHeight = 240;
-var camFps = 10;
-var camInterval = 1000 / camFps;
-
-// face detection properties
-var rectColor = [0, 255, 0];
-var rectThickness = 2;
-
-// initialize camera
-var camera = new cv.VideoCapture(0);
-camera.setWidth(camWidth);
-camera.setHeight(camHeight);
+var cv = require('opencv'),
+  async = require('async');
 
 module.exports = function (socket) {
-  setInterval(function() {
-    camera.read(function(err, im) {
-      if (err) throw err;
+  socket.on('img', function (base64) {
+    var output = base64.replace(/^data:image\/(png|jpeg);base64,/, "");
+    var buffer = new Buffer(output, 'base64');
 
-      im.detectObject('./node_modules/opencv/data/haarcascade_frontalface_alt2.xml', {}, function(err, faces) {
-        if (err) throw err;
+    async.auto({
+      readFromSocket: readFromSocket(buffer),
+      face: ['readFromSocket', detect(cv.FACE_CASCADE)],
+      eyes: ['readFromSocket', detect('./node_modules/opencv/data/haarcascade_mcs_eyepair_small.xml')]
+    }, emitFrame(socket));
+  })
+}
 
-        for (var i = 0; i < faces.length; i++) {
-          face = faces[i];
-          im.rectangle([face.x, face.y], [face.width, face.height], rectColor, rectThickness);
-        }
-
-        socket.emit('frame', { buffer: im.toBuffer() });
-      });
+var readFromSocket = function (buffer) {
+  return function (callback) {
+    cv.readImage(buffer, function (err, mat) {
+      callback(err, mat);
     });
-  }, camInterval);
-};
+  }
+}
+
+var detect = function (haarfile) {
+  return function (callback, results) {
+    var im = results['readFromSocket'];
+    im.detectObject(haarfile, {}, function (err, faces) {
+      if (err) callback(err);
+
+      for (var i = 0; i < faces.length; i++) {
+        face = faces[i];
+        im.ellipse(face.x + face.width / 2, face.y + face.height / 2, face.width / 2, face.height / 2);
+      }
+      callback(null, im);
+    });
+  }
+}
+
+var emitFrame = function (socket) {
+  return function (err, results) {
+    if (err) {
+
+    } else {
+      var im = results['eyes'];
+      socket.emit('frame', {
+        buffer: im.toBuffer()
+      });
+    }
+  }
+}
