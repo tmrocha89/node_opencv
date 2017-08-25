@@ -1,7 +1,14 @@
 // modules
 var express = require('express')
-  , http = require('http')
+  , https = require('https')
   , morgan = require('morgan');
+
+var fs = require('fs');
+
+var options = {
+  key: fs.readFileSync('/etc/ssl/private/selfsigned.key'),
+  cert: fs.readFileSync('/etc/ssl/certs/selfsigned.crt')
+}
 
 // configuration files
 var configServer = require('./lib/config/server');
@@ -15,10 +22,12 @@ app.use(morgan('dev'));
 // serve index
 require('./lib/routes').serveIndex(app, configServer.staticFolder);
 
+console.log(options.key);
+
 // HTTP server
-var server = http.createServer(app);
+var server = https.createServer(options, app);
 server.listen(app.get('port'), function () {
-  console.log('HTTP server listening on port ' + app.get('port'));
+  console.log('HTTPS server listening on port ' + app.get('port'));
 });
 
 // WebSocket server

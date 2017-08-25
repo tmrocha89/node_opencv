@@ -9,7 +9,7 @@ module.exports = function (socket) {
     async.auto({
       readFromSocket: readFromSocket(buffer),
       face: ['readFromSocket', detect(cv.FACE_CASCADE)],
-      eyes: ['readFromSocket', detect('./node_modules/opencv/data/haarcascade_mcs_eyepair_small.xml')]
+      eyes: ['readFromSocket', detect('/app/server/node_modules/opencv/data/haarcascade_mcs_eyepair_small.xml')]
     }, emitFrame(socket));
   })
 }

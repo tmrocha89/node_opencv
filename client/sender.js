@@ -1,3 +1,10 @@
+var errorMessages = function(errorType){
+	if(errorType === "DevicesNotFoundError"){
+		return "Device not found!";
+	}
+	return "Not Supported";
+};
+
 (function () {
 	var canvas = document.getElementById('canvas');
 	var width = 640;
@@ -32,11 +39,11 @@
 			var video = document.getElementsByTagName('video')[0];
 			video.src = window.URL.createObjectURL(mediaStream);
 			video.play();
-			setInterval(takepicture(video), 1000 / 10)
-
+			setInterval(takepicture(video), 1000 / 10);
 		},
 		//handle error
 		function (error) {
 			console.log(error);
+			alert(errorMessages(error.name));
 		})
 })();
