@@ -8,5 +8,4 @@ services:
       - .:/app
     ports:
       - "8080:8080"
-    command: bash -c "cd /app;npm install;node server/server.js"
-    restart: always
+    restart: "always"

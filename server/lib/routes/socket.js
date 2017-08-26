@@ -1,5 +1,5 @@
-var cv = require('opencv'),
-  async = require('async');
+var cv = require('opencv');
+var async = require('async');
 
 module.exports = function (socket) {
   socket.on('img', function (base64) {

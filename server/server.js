@@ -1,14 +1,13 @@
 // modules
-var express = require('express')
-  , https = require('https')
-  , morgan = require('morgan');
-
+var express = require('express');
+var https = require('https');
+var morgan = require('morgan');
 var fs = require('fs');
 
 var options = {
   key: fs.readFileSync('/etc/ssl/private/selfsigned.key'),
   cert: fs.readFileSync('/etc/ssl/certs/selfsigned.crt')
-}
+};
 
 // configuration files
 var configServer = require('./lib/config/server');
@@ -21,8 +20,6 @@ app.use(morgan('dev'));
 
 // serve index
 require('./lib/routes').serveIndex(app, configServer.staticFolder);
-
-console.log(options.key);
 
 // HTTP server
 var server = https.createServer(options, app);
