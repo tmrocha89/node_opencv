@@ -125,7 +125,7 @@ var initImgs = function(){
     this._imgs.push(new MultipleWeddingImages("giphy04.webp", [POSITIONS.MM]));
     this._imgs.push(new MultipleWeddingImages("giphy02.gif", [POSITIONS.MM]));
     this._imgs.push(new MultipleWeddingImages("giphy03.gif", [POSITIONS.BR], [], 100, 100));
-    this._imgs.push(new MultipleWeddingImages("giphy03.gif", [POSITIONS.BR, POSITIONS.LT], [], 100, 100));
+    this._imgs.push(new MultipleWeddingImages("giphy03.gif", [POSITIONS.BR, POSITIONS.TL], [], 100, 100));
     this._imgs.push(new MultipleWeddingImages("heart-47950_640.png", [POSITIONS.TL, POSITIONS.TR], ["", getMirrorImageStyle()], 200));
 }
 
