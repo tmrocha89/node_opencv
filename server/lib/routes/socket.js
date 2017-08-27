@@ -5,14 +5,22 @@ module.exports = function (socket) {
   socket.on('img', function (base64) {
     var output = base64.replace(/^data:image\/(png|jpeg);base64,/, "");
     var buffer = new Buffer(output, 'base64');
-
     async.auto({
       readFromSocket: readFromSocket(buffer),
       face: ['readFromSocket', detect(cv.FACE_CASCADE)],
       eyes: ['readFromSocket', detect('/app/server/node_modules/opencv/data/haarcascade_mcs_eyepair_small.xml')]
     }, emitFrame(socket));
   })
-}
+
+  socket.on('save', function (base64) {
+    console.log("...save...");
+    var output = base64.replace(/^data:image\/(png|jpeg);base64,/, "");
+    var buffer = new Buffer(output, 'base64');
+    cv.readImage(buffer, function (err, mat) {
+      mat.save("./teste.png");
+    });
+  })
+};
 
 var readFromSocket = function (buffer) {
   return function (callback) {
@@ -20,7 +28,7 @@ var readFromSocket = function (buffer) {
       callback(err, mat);
     });
   }
-}
+};
 
 var detect = function (haarfile) {
   return function (callback, results) {
@@ -35,7 +43,7 @@ var detect = function (haarfile) {
       callback(null, im);
     });
   }
-}
+};
 
 var emitFrame = function (socket) {
   return function (err, results) {
@@ -48,4 +56,4 @@ var emitFrame = function (socket) {
       });
     }
   }
-}
+};
