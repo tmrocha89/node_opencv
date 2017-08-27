@@ -28,10 +28,10 @@ var detect = function (haarfile) {
     im.detectObject(haarfile, {}, function (err, faces) {
       if (err) callback(err);
 
-      for (var i = 0; i < faces.length; i++) {
+      /*for (var i = 0; i < faces.length; i++) {
         face = faces[i];
         im.ellipse(face.x + face.width / 2, face.y + face.height / 2, face.width / 2, face.height / 2);
-      }
+      }*/
       callback(null, im);
     });
   }
