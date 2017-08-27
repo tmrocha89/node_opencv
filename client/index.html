@@ -9,10 +9,15 @@
   <div class="container center">
   	<video style="display:none"></video>
   	<canvas id="canvas" style="display:none"></canvas>
-  	<canvas id="canvas-face" width="640" height="480"></canvas>
+    <canvas id="canvas-face" width="640" height="480"></canvas>
+    <canvas id="canvas-overlay" width="640" height="480"></canvas>
+    <div id="overlay-container" class="center">
+      <!--<img id="overlay-img" />-->
+    </div>
   </div>
 
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  <script type="text/javascript" src="/gallery.js"></script>
   <script type="text/javascript" src="/receiver.js"></script>
   <script type="text/javascript" src="/sender.js"></script>
 </body>
