@@ -72,25 +72,29 @@ WeddingImage.prototype.show = function(htmlElement, frameSize){
     htmlElement.style = style;
 };
 
-function MultipleWeddingImages(path, positions, styles, width, height){
-    this._path = path;
-    this._width = width;
-    this._height = height;
+function MultipleWeddingImages(paths, positions, styles, dimensions){
+    this._paths = paths;
+    this._dimensions = dimensions;
     this._positions = positions;
     this._styles = styles;
 }
 
 MultipleWeddingImages.prototype.show = function(container, frameSize){
     console.log(frameSize)
-    for(var i=0; i < this._positions.length; i++){
-        var coords = this._positions[i].getPosition(this._width || frameSize.width, this._height || frameSize.height, frameSize.width, frameSize.height);
+    for(var i=0; i < this._paths.length; i++){
+        var dim = this._dimensions[i];
+        if(!dim) dim = {};
+        dim.width = dim.width ? dim.width : frameSize.width;
+        dim.height = dim.height ? dim.height : frameSize.height;
+        
+        var coords = this._positions[i].getPosition(dim.width, dim.height, frameSize.width, frameSize.height);
         console.log(coords)
         var img = document.createElement('img');
-        img.src = this._path;
+        img.src = this._paths[i];
 
         var style = "";
-        style += "width:"+this._width+"px;";
-        style += "height:"+this._height+"px;"; 
+        style += "width:"+dim.width+"px;";
+        style += "height:"+dim.height+"px;"; 
         style += "margin-left:"+coords.ml+"px;";
         style += "margin-top:"+coords.mt+"px;";
         var tmpStyle = this._styles ? this._styles[i] : undefined;
@@ -114,19 +118,21 @@ var getMirrorImageStyle = function(){
 }
 
 var initImgs = function(){
-    this._imgs.push(new MultipleWeddingImages("border-48407_640.png", [POSITIONS.MM]));
-    this._imgs.push(new MultipleWeddingImages("border-48945_640.png", [POSITIONS.MM]));
-    this._imgs.push(new MultipleWeddingImages("heart-47950_640.png", [POSITIONS.TL], [], 200));
-    //this._imgs.push(new MultipleWeddingImages("giphy.gif", [POSITIONS.MM]));
-    this._imgs.push(new MultipleWeddingImages("giphy01.webp", [POSITIONS.MM]));
-    //this._imgs.push(new MultipleWeddingImages("giphy02.webp", [POSITIONS.MM]));
-    this._imgs.push(new MultipleWeddingImages("giphy03.webp", [POSITIONS.MM]));
-    this._imgs.push(new MultipleWeddingImages("hearts01.webp", [POSITIONS.BR], [], 100, 100));
-    this._imgs.push(new MultipleWeddingImages("giphy04.webp", [POSITIONS.MM]));
-    this._imgs.push(new MultipleWeddingImages("giphy02.gif", [POSITIONS.MM]));
-    this._imgs.push(new MultipleWeddingImages("giphy03.gif", [POSITIONS.BR], [], 100, 100));
-    this._imgs.push(new MultipleWeddingImages("giphy03.gif", [POSITIONS.BR, POSITIONS.TL], [], 100, 100));
-    this._imgs.push(new MultipleWeddingImages("heart-47950_640.png", [POSITIONS.TL, POSITIONS.TR], ["", getMirrorImageStyle()], 200));
+    this._imgs.push(new MultipleWeddingImages(["border-48407_640.png"], [POSITIONS.MM]));
+    this._imgs.push(new MultipleWeddingImages(["border-48945_640.png"], [POSITIONS.MM]));
+    this._imgs.push(new MultipleWeddingImages(["heart-47950_640.png"], [POSITIONS.TL], [], [{width:200}]));
+    //this._imgs.push(new MultipleWeddingImages(["giphy.gif"], [POSITIONS.MM]));
+    this._imgs.push(new MultipleWeddingImages(["giphy01.webp"], [POSITIONS.MM]));
+    //this._imgs.push(new MultipleWeddingImages(["giphy02.webp"], [POSITIONS.MM]));
+    this._imgs.push(new MultipleWeddingImages(["giphy03.webp"], [POSITIONS.MM]));
+    this._imgs.push(new MultipleWeddingImages(["hearts01.webp"], [POSITIONS.BR], [], [{width:100, heigth:100}]));
+    this._imgs.push(new MultipleWeddingImages(["giphy04.webp"], [POSITIONS.MM]));
+    this._imgs.push(new MultipleWeddingImages(["giphy02.gif"], [POSITIONS.MM]));
+    this._imgs.push(new MultipleWeddingImages(["giphy03.gif"], [POSITIONS.BR], [],  [{width:100, heigth:100}]));
+    this._imgs.push(new MultipleWeddingImages(["giphy03.gif"], [POSITIONS.BR, POSITIONS.TL], [],  [{width:100, heigth:100}]));
+    this._imgs.push(new MultipleWeddingImages(["heart-47950_640.png"], [POSITIONS.TL, POSITIONS.TR], ["", getMirrorImageStyle()], [{width:200}]));
+    this._imgs.push(new MultipleWeddingImages(["border-48945_640.png","giphy03.gif", "giphy01.webp"], [POSITIONS.TL, POSITIONS.TL, POSITIONS.MM], [], [{}, {width:100, height:100}]));
+
 }
 
 function Gallery(images){
