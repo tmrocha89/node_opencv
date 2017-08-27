@@ -8,7 +8,7 @@ var errorMessages = function(errorType){
 (function () {
 	var canvas = document.getElementById('canvas');
 	var width = 640;
-	var height = 480;
+	var height = 850;
 
 	function takepicture(video) {
 		return function () {
@@ -52,7 +52,7 @@ var errorMessages = function(errorType){
 function takePhoto(){
 	var canvas = document.getElementById('canvas');
 	var width = 640;
-	var height = 480;
+	var height = 850;
 
 
 	var video = document.getElementsByTagName('video')[0];

@@ -1,24 +1,22 @@
-.container {
-  padding-top: 50px;
+#wrapper{
+  position: absolute;
+  width: 640px;
+  height: 850px;
 }
 
 .center {
   text-align: center;
 }
 
+.div-overlay{
+  position: absolute;
+}
+
 #canvas-face {
   position: absolute;
   z-index: 1;
   width: 640px;
-  height: 480px;
-  border: 1px solid #ccc;
-}
-
-#canvas-overlay {
-  position: absolute;
-  z-index: 2;
-  width: 640px;
-  height: 480px;
+  height: 850px;
   border: 1px solid #ccc;
 }
 
@@ -26,5 +24,13 @@
   position: absolute;
   z-index: 2;
   width: 640px;
-  height: 480px;
+  height: 850px;
+  clear: both;
+}
+
+button{
+  margin-top: 850px;
+  width: 640px;
+  height: 50px;
+  z-index: 2;
 }

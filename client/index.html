@@ -6,16 +6,18 @@
   <link rel="stylesheet" type="text/css" href="/styles.css">
 </head>
 <body>
-  <div class="container center">
-  	<video style="display:none"></video>
-  	<canvas id="canvas" style="display:none"></canvas>
-    <canvas id="canvas-face" width="640" height="480"></canvas>
-    <canvas id="canvas-overlay" width="640" height="480"></canvas>
-    <div id="overlay-container" class="center">
+  <div id="wrapper" class="container center">
+    <div class="div-overlay">
+      <video style="display:none"></video>
+      <canvas id="canvas" style="display:none"></canvas>
+      <canvas id="canvas-face" width="640" height="480"></canvas>
+      <canvas id="canvas-overlay" width="640" height="480"></canvas>
+    </div>
+    <div id="overlay-container" class="div-overlay center">
       <!--<img id="overlay-img" />-->
     </div>
-    <button type="button" onclick="takePhoto()">Take a Photo</button>
-  </div>
+</div>
+<button type="button" onclick="takePhoto()" >Take a Photo</button>
 
   <script type="text/javascript" src="/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="/gallery.js"></script>

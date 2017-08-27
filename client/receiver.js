@@ -1,7 +1,7 @@
 // MODIFY THIS TO THE APPROPRIATE URL IF IT IS NOT BEING RUN LOCALLY
 var socket = io.connect('https://192.168.1.118:8080');
 var gallery = new Gallery();
-gallery.setFrameSize(640,480);
+gallery.setFrameSize(640,850);
 
 var drawOverlay = function(WIDTH, HEIGHT){
 	var overlayCanvas = document.getElementById('canvas-overlay');
